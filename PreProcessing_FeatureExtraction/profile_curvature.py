@@ -27,6 +27,9 @@ def compute_curvature(image, sigma):
 		2. take the first (dh/dx) and second (d^2/dh^2) derivatives of the filter
 		3. calculate the first and second derivatives of the smoothed signal using
 		derivative kernel's.
+		:type image: object
+		:param image, sigma:
+		:return kappa:
 	"""
 
 	# 1. constructs the 2D gaussian filter "h" given the window size
@@ -70,7 +73,7 @@ def compute_curvature(image, sigma):
 
 # Test
 
-
+"""
 image_path = '../sample dataset/input/s1/2017232_R_0.jpg'
 image = cv2.imread(image_path, 0)
 processed_image = remove_hair(image, 4)
@@ -106,3 +109,4 @@ plt.suptitle("compute curvature")
 plt.tight_layout()
 plt.savefig('curvature_in_all_direction.png')
 plt.show()
+"""

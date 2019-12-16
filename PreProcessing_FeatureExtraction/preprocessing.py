@@ -17,18 +17,18 @@ def remove_hair(image, mexican_kernel_size, low=1, high=4):
 
 # test
 
-image_path = '../sample dataset/input/s1/2017232_R_0.jpg'
-image = cv2.imread(image_path, 0)
-processed_image = remove_hair(image, 3)
+#image_path = '../sample dataset/input/s1/2017232_R_0.jpg'
+#image = cv2.imread(image_path, 0)
+#processed_image = remove_hair(image, 3)
 
-plt.subplot(1,2,1)
-plt.imshow(image, cmap='gray')
-plt.title('Original Image')
+#plt.subplot(1,2,1)
+#plt.imshow(image, cmap='gray')
+#plt.title('Original Image')
 
-plt.subplot(1,2,2)
-plt.imshow(processed_image, cmap='gray')
-plt.title('Processed Image')
+#plt.subplot(1,2,2)
+#plt.imshow(processed_image, cmap='gray')
+#plt.title('Processed Image')
 
-plt.suptitle("Hair Removal")
-plt.tight_layout()
-plt.show()
+#plt.suptitle("Hair Removal")
+#plt.tight_layout()
+#plt.show()

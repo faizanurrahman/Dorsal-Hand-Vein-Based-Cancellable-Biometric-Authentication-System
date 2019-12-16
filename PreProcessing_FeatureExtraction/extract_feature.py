@@ -1,12 +1,10 @@
 import numpy as np
-
-from label import binaries
-from detect_vein_center_assign_score import compute_vein_score
-from profile_curvature import compute_curvature
 from connect_center import connect_centres
-from scipy.signal import convolve2d
-from preprocessing import remove_hair
+from detect_vein_center_assign_score import compute_vein_score
+from label import binaries
 from normalize import normalize_data
+from preprocessing import remove_hair
+from profile_curvature import compute_curvature
 
 """
 	In this method, the local maximum curvature is calculated in the cross-sectional 
@@ -73,14 +71,14 @@ def vein_pattern(image, kernel_size, sigma):
 	vein_pattern = np.multiply(image, threshold, dtype=float)
 
 	return vein_pattern
-"""
+
 # test
 import cv2
 import matplotlib.pyplot as plt
 
-image_path = '../sample dataset/input/s1/2017232_R_0.jpg'
+image_path = '../sample dataset/input/s1/2017232_R_5.jpg'
 image = cv2.imread(image_path, 0)
-processed_image = vein_pattern(image, 3, 6)
+processed_image = vein_pattern(image, 6, 8)
 
 plt.subplot(1,2,1)
 plt.imshow(image, cmap='gray')
@@ -95,4 +93,3 @@ plt.tight_layout()
 plt.savefig("vein_pattern_extracted.png")
 plt.show()
 
-"""

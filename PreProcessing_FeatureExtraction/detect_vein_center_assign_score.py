@@ -1,8 +1,4 @@
 import numpy
-import cv2
-import matplotlib.pyplot as plt
-from preprocessing import remove_hair
-from profile_curvature import compute_curvature
 
 
 # calculating probabilistic score on 1-D array.
@@ -66,7 +62,7 @@ def compute_vein_score(k):
 
 	# we have to return this variable correctly.
 	score = numpy.zeros(k.shape, dtype='float64')
-	#print(score.shape)
+	# print(score.shape)
 	# Horizontal direction
 	for index in range(k.shape[0]):
 		score[index, :, 0] += profile_score_1d(k[index, :, 0])
@@ -86,7 +82,7 @@ def compute_vein_score(k):
 	Vud = numpy.flipud(score)  # match above inversion
 	for index in reversed(range(curve.shape[1] - 1, -curve.shape[0], -1)):
 		Vud[i == (j - index), 3] += profile_score_1d(curve.diagonal(index))
-	#print("Vud shape", Vud.shape)
+	# print("Vud shape", Vud.shape)
 	return score
 
 

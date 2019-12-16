@@ -1,9 +1,4 @@
 import numpy
-import cv2
-import matplotlib.pyplot as plt
-from preprocessing import remove_hair
-from profile_curvature import compute_curvature
-from detect_vein_center_assign_score import compute_vein_score
 
 
 def connect_profile_1d(vein_prob_1d):
@@ -46,11 +41,11 @@ def connect_centres(vein_score):
 	vein_score = temp
 	# Horizontal direction
 	for index in range(vein_score.shape[0]):
-		connected_center[index, 2:-2, 0] = 2 * connect_profile_1d(vein_score[index, :])
+		connected_center[index, 2:-2, 0] = connect_profile_1d(vein_score[index, :])
 
 	# Vertical direction
 	for index in range(vein_score.shape[1]):
-		connected_center[2:-2, index, 1] = 2 * connect_profile_1d(vein_score[:, index])
+		connected_center[2:-2, index, 1] = connect_profile_1d(vein_score[:, index])
 
 	#print(vein_score.shape)
 	# Direction: 45 degrees (\)

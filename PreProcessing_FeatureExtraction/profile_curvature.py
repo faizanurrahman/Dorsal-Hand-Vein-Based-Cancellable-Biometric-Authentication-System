@@ -1,9 +1,7 @@
+import math
+
 import numpy as np
 import scipy.ndimage as Image
-import math
-import matplotlib.pyplot as plt
-from preprocessing import remove_hair
-import cv2
 
 
 def compute_curvature(image, sigma):
@@ -50,9 +48,9 @@ def compute_curvature(image, sigma):
 
 	# 3. calculates derivatives w.r.t. to all directions
 
-	image_g1_0 = 0.01 * Image.convolve(image, G1_0, mode='nearest')
+	image_g1_0 = 0.1 * Image.convolve(image, G1_0, mode='nearest')
 	image_g2_0 = 10 * Image.convolve(image, G2_0, mode='nearest')
-	image_g1_90 = 0.01 * Image.convolve(image, G1_90, mode='nearest')
+	image_g1_90 = 0.1 * Image.convolve(image, G1_90, mode='nearest')
 	image_g2_90 = 10 * Image.convolve(image, G2_90, mode='nearest')
 	fxy = Image.convolve(image, hxy, mode='nearest')
 	image_g1_45 = 0.5 * np.sqrt(2) * (image_g1_0 + image_g1_90)

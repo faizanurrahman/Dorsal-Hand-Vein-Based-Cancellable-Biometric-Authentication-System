@@ -66,7 +66,7 @@ def compute_vein_score(k):
 
 	# we have to return this variable correctly.
 	score = numpy.zeros(k.shape, dtype='float64')
-	print(score.shape)
+	#print(score.shape)
 	# Horizontal direction
 	for index in range(k.shape[0]):
 		score[index, :, 0] += profile_score_1d(k[index, :, 0])

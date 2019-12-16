@@ -86,7 +86,7 @@ def compute_vein_score(k):
 	Vud = numpy.flipud(score)  # match above inversion
 	for index in reversed(range(curve.shape[1] - 1, -curve.shape[0], -1)):
 		Vud[i == (j - index), 3] += profile_score_1d(curve.diagonal(index))
-	print("Vud shape", Vud.shape)
+	#print("Vud shape", Vud.shape)
 	return score
 
 

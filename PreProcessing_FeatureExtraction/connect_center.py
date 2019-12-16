@@ -69,7 +69,7 @@ def connect_centres(vein_score):
 	return connected_center
 
 
-# """
+"""
 # test
 
 image_path = '../sample dataset/input/s1/2017232_R_0.jpg'
@@ -109,4 +109,4 @@ plt.tight_layout()
 plt.savefig('connected_score_in_all_direction.png')
 plt.show()
 
-# """
+"""

@@ -28,7 +28,7 @@ Key = np.array(Key)
 
 
 # Read File
-input_folder_path = '../sample dataset/input/'
+input_folder_path = r'C:\Users\Faizan\Desktop\Dorsal Hand Vein Based Authentication System\DataSet\input\\'
 input_folder_content = (os.listdir(input_folder_path))
 print("Dataset contain", input_folder_content)
 NumberOfSub = len(input_folder_content)
@@ -81,8 +81,8 @@ R = len(sub_folder_content)  # No. of rows sub_folder_content[][]...40
 C = len(sub_folder_content[0])  # No. of cols sub_folder_content[][]...10
 
 # testing parameter for creating database
-R = 1
-C = 5
+# R = 1
+# C = 5
 # stander size of image
 k = 100
 N = 100

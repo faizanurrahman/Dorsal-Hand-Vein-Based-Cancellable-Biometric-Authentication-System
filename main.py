@@ -1,6 +1,6 @@
 print('\n')
-print('Load images from a database and compute Gabor magnitude features.')
-print('During this step we also need to  construct the \n Gabor filter bank and extract the Gabor magnitude features.')
+print('Load images from a database and compute it\'s features.')
+print('During this we also transform feature using random distance.')
 print('This may take a while.')
 
 import csv
@@ -10,12 +10,14 @@ import warnings
 
 import cv2
 import numpy as np
-import transformUsingMeximumCurvatureAndRG as MCRG
-from Classification import KFA
-from Classification import Projection
 from scipy.spatial import distance
 # from Classification import Results
 from sklearn.preprocessing import normalize
+
+from cancellability.feature_rdmtransform import transformMeximumCurvatureRDM as MCRG
+# import transformUsingMeximumCurvatureAndRG as MCRG
+from classification import KFA
+from classification import Projection
 
 warnings.filterwarnings("ignore")
 
@@ -35,28 +37,31 @@ def minmax(X, low, high, minX=None, maxX=None, dtype=np.float):
 	return np.asarray(X, dtype=dtype)
 
 
-main_folder_path = r"C:\Users\Faizan\Desktop\PBI_Dorsal_vein_Biometric_Authentication\Database\DorsalVeins Image"
-main_folder_content = (os.listdir(main_folder_path))
-NumberOfSub = len(main_folder_content)
+# Read File
+input_folder_path = './sample dataset/veinpattern/'
+input_folder_content = (os.listdir(input_folder_path))
+print("Dataset contain", input_folder_content)
+NumberOfSub = len(input_folder_content)
+print("Number of input subfolder: ", NumberOfSub)
 S_Path = []
 for subfolderNo in range(0, NumberOfSub):
-	S_Path.append(main_folder_path + '\\' + main_folder_content[subfolderNo])
+	S_Path.append(os.path.join(input_folder_path, input_folder_content[subfolderNo]))
+
 sub_folder_content = []
+
 for subfolderNo in range(0, NumberOfSub):
 	sub_folder_content.append(os.listdir(S_Path[subfolderNo]))
 
 R = len(sub_folder_content)  # No. of rows sub_folder_content[][]...85
 C = len(sub_folder_content[0])  # No. of cols sub_folder_content[][]...10
-R = 5
-C = 2
+# R = 5
+# C = 3
 k = 100
 N = 100
 KeyMat = []
 
-with open(
-		r'C:\Users\Faizan\Desktop\Intern-Arpita-HK_Codes\Intern-Arpita-HK_Codes\Scheme 1- Random Grid ,LG, XOR,Median\Key09.csv') as File:
-	reader = csv.reader(File, delimiter=',', quotechar=',',
-	                    quoting=csv.QUOTE_MINIMAL)
+with open('./create_csv/Key01.csv') as File:
+	reader = csv.reader(File, delimiter=',', quotechar=',', quoting=csv.QUOTE_MINIMAL)
 	for row in reader:
 		for i in range(0, len(row)):
 			row[i] = float(row[i])
@@ -64,14 +69,12 @@ with open(
 
 print('Key Matrix Loaded')
 KeyMat = np.array(KeyMat)
-KeyMat = KeyMat.T
+#KeyMat = KeyMat.T
 KeyMat = normalize(KeyMat)
 KeyMat1 = []
 
-with open(
-		r'C:\Users\Faizan\Desktop\Intern-Arpita-HK_Codes\Intern-Arpita-HK_Codes\Scheme 1- Random Grid ,LG, XOR,Median\Key10.csv') as File:
-	reader = csv.reader(File, delimiter=',', quotechar=',',
-	                    quoting=csv.QUOTE_MINIMAL)
+with open('./create_csv/Key02.csv') as File:
+	reader = csv.reader(File, delimiter=',', quotechar=',', quoting=csv.QUOTE_MINIMAL)
 	for row in reader:
 		for i in range(0, len(row)):
 			row[i] = float(row[i])
@@ -79,7 +82,7 @@ with open(
 
 print('Key Matrix 2 Loaded')
 KeyMat1 = np.array(KeyMat1)
-KeyMat1 = KeyMat1.T
+#KeyMat1 = KeyMat1.T
 KeyMat1 = normalize(KeyMat1)
 
 fvs3 = []
@@ -97,7 +100,7 @@ for x in range(0, R):  # R: number of subjects
 		####print('===========Img=======================')
 		###print (Img)
 		Img = np.asarray(Img, dtype=np.float64)
-		# Img = cv2.resize(Img, (k,N), interpolation=cv2.INTER_CUBIC)
+		Img = cv2.resize(Img, (k, N), interpolation=cv2.INTER_CUBIC)
 
 		####print('===========key=======================')
 		Key = KeyMat[x]
@@ -105,13 +108,12 @@ for x in range(0, R):  # R: number of subjects
 		# For worst case scenario (same key for all users) set x=1 or x=2 as required...
 		####print('===========Key1=======================')
 		Key1 = KeyMat1[x]
-		print(Key1)
+		#print(Key1)
 		Key = Key.reshape(k * N, 1)
 		# Key=Key.reshape(k*N*nscale*norient,1)
 		Key1 = Key1.reshape(k * N, 1)
 		# transformedFeatureVector=Img
-		transformedFeatureVector, fvs = MCRG.transformUsingMeximumCurvatureAndRG(Img, Key, Key1, 4, k,
-		                                                                         N)  # (24x100x100,1)
+		transformedFeatureVector, fvs = MCRG(Img, Key, Key1)  # (100x100,1)
 		#####print('===========fvs=======================')
 		#####print ('feature : ',fvs)
 
@@ -158,7 +160,7 @@ for x in range(0, R1):
 		###print (Img2)
 		###print('===============Key===================')
 		Img2 = np.asarray(Img2, dtype=float)
-		# Img2 = cv2.resize(Img2, (k,N), interpolation=cv2.INTER_CUBIC)
+		Img2 = cv2.resize(Img2, (k, N), interpolation=cv2.INTER_CUBIC)
 
 		Key = KeyMat[ids_test]
 		###print (Key)
@@ -169,8 +171,7 @@ for x in range(0, R1):
 		Key = Key.reshape(k * N, 1)
 		Key1 = Key1.reshape(k * N, 1)
 		# transformedFeatureVector=Img
-		transformedFeatureVector1, fvs1 = MCRG.transformUsingMeximumCurvatureAndRG(Img2, Key, Key1, 4, k,
-		                                                                           N)  # (24x100x100,1)
+		transformedFeatureVector1, fvs1 = MCRG(Img2, Key, Key1)  # (100x100,1)
 		###print('===========fvs1=======================')
 		###print ('feature : ',fvs1)
 

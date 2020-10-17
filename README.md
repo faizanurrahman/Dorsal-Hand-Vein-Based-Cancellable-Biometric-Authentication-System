@@ -26,12 +26,14 @@ In this project, I had to build a biometric authentication system, and need to p
  
 
 **About Data**
+
 I used 850 dorsal hand images, taken from a special device that use Infrared light to capture viens data.
 850 Biometric Data = 85 person, 10 samples each.
 
 How data capture device work: Unlikely to oxygenated hemoglobin, deoxidized hemoglobin absorbs light at a wavelength of about 760nm, which is in the range of the near-infrared (NIR) band. Therefore, when the dorsal hand is illuminated with near-infrared light, deoxidized hemoglobin absorbs the light and appears as a black pattern in the dorsal image.
 
 **About Pre-Processing Data**
+
 
 **About Feature Extraction**
 
